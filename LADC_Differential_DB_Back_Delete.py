@@ -10,6 +10,7 @@ def modification_date(filename):
 
 ###245 GB=263066746880 Byte
 ###500 MB=524288000 Byte
+maxFolderSizeCanBeArchived=263066746880
 def convert_bytes(num):
     """
     this function will convert bytes to MB.... GB... etc
@@ -92,7 +93,7 @@ for roots, dirs, files in os.walk(backupPath):
         files = glob.glob(backupPath1 + '\\*.bak')
         oldestFile = get_oldest_file(files)
         ###if individual file sixe gater than 245 GB
-        if(GetFileSize(oldestFile)>263066746880):
+        if(GetFileSize(oldestFile)>maxFolderSizeCanBeArchived):
             tempFileName = oldestFile[95 + directoryNameLength::]
             modificationDate = modification_date(oldestFile)
             if(modificationDate not in days):
@@ -125,7 +126,7 @@ for roots, dirs, files in os.walk(backupPath):
             ###if month is feb check leap year and decide max number of files can be clubbed in single folder
             elif ("_02_01_" in oldestFile):
                 maxIterate = 28
-                if (int(oldestFile[len(dir) + 8:len(dir) + 12]) % 4 == 0):
+                if (int(oldestFile[95+(2*len(dir))+9:95+(2*len(dir))+13]) % 4 == 0):
                     maxIterate = 29
             ###if month has 30 days max 30 files can be clubbed in 1 folder
             else:
@@ -141,7 +142,7 @@ for roots, dirs, files in os.walk(backupPath):
                         tempFileName = oldestFile[95 + directoryNameLength::]
                         modificationDate = modification_date(oldestFile)
                         if (
-                                modificationDate not in days and noOfFilesToMove < maxIterate and fileSizeToMoveInByte <= 263066746880):
+                                modificationDate not in days and noOfFilesToMove < maxIterate and fileSizeToMoveInByte <= maxFolderSizeCanBeArchived):
                             filesToMove.append(oldestFile)
                             fileSizeToMoveInByte += GetFileSize(oldestFile)
                             noOfFilesToMove += 1
