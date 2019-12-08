@@ -83,9 +83,11 @@ for roots, dirs, files in os.walk(backupPath):
         filesToMove=[]
         days=getDates()
         directoryNameLength = len(dir)
-        ###creating the sub folder in side aspera hot folder
+        ###Aspera hot folder Path
         moveToTemp1 = r"D:\filesToMoveToTN\\"
+        ###creating the sub folder in side aspera hot folder
         moveToTemp = r"D:\filesToMoveToTN\\" + dir
+        
         if (os.path.isdir(moveToTemp) == False):
             os.mkdir(moveToTemp)
 
